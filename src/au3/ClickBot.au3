@@ -46,13 +46,7 @@ Func Main()
 	
 	; main event loop.
 	While True
-		ToolTip($message, 200, 0, "Farmville Helperbot is " & $status)
-		
-		if FileExists("capture.bmp") Then
-			$status = "Working!"
-		Else
-			$status ="Idle."
-		EndIf
+		ToolTip($message, 200, 0, "Farmville Click automation is " & $status)
 		
 		if not StringInStr ( WinGetTitle(""), "FarmVille") and not StringInStr ( WinGetTitle(""), "Adobe Flash Player") Then
 			$status ="Inactive." & WinGetTitle("")
@@ -60,6 +54,13 @@ Func Main()
 			Sleep(300)
 			ContinueLoop
 		EndIf
+
+		if FileExists("capture.bmp") Then
+			$status = "Working!"
+		Else
+			$status ="Idle."
+		EndIf
+		
 		
 		$pos = MouseGetPos()
 	
@@ -70,12 +71,12 @@ Func Main()
 			MouseMove(0,0)
 		
 			FileDelete("capture.bmp")
-			_ScreenCapture_Capture("capture.bmp", $pos[0] - 2, $pos[1] - 5, $pos[0] + 2, $pos[1] + 5, false)
+			_ScreenCapture_Capture("capture.bmp", $pos[0] - 4, $pos[1] - 4, $pos[0] + 4, $pos[1] + 4, false)
 			MouseMove($pos[0],$pos[1],1)
 		EndIf
 	
 		; If a captured tile exists, trigger a image search.
-		If FileExists("capture.bmp") and _ImageSearch("capture.bmp",1,$x1,$y1,10) Then
+		If FileExists("capture.bmp") and _ImageSearch("capture.bmp",1,$x1,$y1,30) Then
 			$message = "Working hard!"
 			MouseMove($x1,$y1, 1)
 			MouseClick("left")
@@ -94,7 +95,7 @@ Func Main()
 			if $repeat == 3 Then	; retry 3 times before failing.
 				$repeat = 0
 				FileDelete("capture.bmp")
-				MsgBox(0, "Clickbot", "Clicking ther does nothing.")
+				MsgBox(0, "Clickbot", "I tried thrice, but clicking there does nothing.")
 				EndIf
 				else
 				$repeat = 0
@@ -103,7 +104,7 @@ Func Main()
 			$oldx1 = $x1
 			$oldy1 = $y1
 			
-			if not _ImageSearch("capture.bmp",1,$x1,$y1,50) Then ; If I can't find another tile to click on,
+			if not _ImageSearch("capture.bmp",1,$x1,$y1,30) Then ; If I can't find another tile to click on,
 				MouseMove($x1 - 300,$y1 - 300)	; Move the mouse out of the way incase it's interfering with pixelsearch.
 			EndIf
 		Else
