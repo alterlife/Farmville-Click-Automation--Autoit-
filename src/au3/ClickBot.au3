@@ -40,14 +40,14 @@ Func Main()
 	$oldx1=0
 	$oldy1=0
 	$repeat = 0
-	
+
 	; cleanup just incase.
 	FileDelete("capture.bmp")
-	
+
 	; main event loop.
 	While True
 		ToolTip($message, 200, 0, "Farmville Click automation is " & $status)
-		
+
 		if not StringInStr ( WinGetTitle(""), "FarmVille") and not StringInStr ( WinGetTitle(""), "Adobe Flash Player") Then
 			$status ="Inactive." & WinGetTitle("")
 			$message = "Please switch to a farmville window."
@@ -71,12 +71,12 @@ Func Main()
 			MouseMove(0,0)
 		
 			FileDelete("capture.bmp")
-			_ScreenCapture_Capture("capture.bmp", $pos[0] - 4, $pos[1] - 4, $pos[0] + 4, $pos[1] + 4, false)
+			_ScreenCapture_Capture("capture.bmp", $pos[0] - 2, $pos[1] - 2, $pos[0] + 2, $pos[1] + 2, false)
 			MouseMove($pos[0],$pos[1],1)
 		EndIf
-	
+
 		; If a captured tile exists, trigger a image search.
-		If FileExists("capture.bmp") and _ImageSearch("capture.bmp",1,$x1,$y1,30) Then
+		If FileExists("capture.bmp") and _ImageSearch("capture.bmp",1,$x1,$y1,25) Then
 			$message = "Working hard!"
 			MouseMove($x1,$y1, 1)
 			MouseClick("left")
